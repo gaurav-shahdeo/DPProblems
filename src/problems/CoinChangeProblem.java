@@ -1,6 +1,7 @@
 package problems;
 
-// Coin Change Problem using recursion.
+
+import java.util.Arrays;
 
 public class CoinChangeProblem {
 
@@ -14,15 +15,29 @@ public class CoinChangeProblem {
 
     private static int coinChange(int[] coins, int changeFor) {
         int m = coins.length;
-        return coinChange(coins, m, changeFor);
+        return coinChangeDP(coins, m, changeFor);
     }
 
-    private static int coinChange(int[] coins, int m, int changeFor) {
+    // Coin Change Problem using Dynamic Programming.
+    private static int coinChangeDP(int[] coins, int m, int changeFor) {
+        int[] table = new int[changeFor+1];
+        table[0] = 1;
+
+        for(int i = 0; i < m; i++) {
+            for(int j=coins[i]; j<=changeFor; j++) {
+                table[j] += table[j-coins[i]];
+            }
+        }
+
+        return table[changeFor];
+    }
+
+    // Coin Change Problem using recursion.
+    private static int coinChangeRecursion(int[] coins, int m, int changeFor) {
         if(changeFor == 0) return 1;
         if(changeFor < 0) return 0;
         if(m <= 0 && changeFor >= 1) return 0;
 
-        return coinChange(coins, m-1, changeFor) + coinChange(coins, m, changeFor-coins[m-1]);
-
+        return coinChangeRecursion(coins, m-1, changeFor) + coinChangeRecursion(coins, m, changeFor-coins[m-1]);
     }
 }
