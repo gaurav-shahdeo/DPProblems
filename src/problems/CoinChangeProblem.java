@@ -18,6 +18,7 @@ public class CoinChangeProblem {
         return coinChangeDP(coins, m, changeFor);
     }
 
+    // Coin Change Problem using Dynamic Programming.
     private static int coinChangeDP(int[] coins, int m, int changeFor) {
         int[] table = new int[changeFor+1];
         table[0] = 1;
@@ -39,9 +40,4 @@ public class CoinChangeProblem {
 
         return coinChangeRecursion(coins, m-1, changeFor) + coinChangeRecursion(coins, m, changeFor-coins[m-1]);
     }
-
-    // Coin Change Problem using Dynamic Programming.
-
-
-
 }
